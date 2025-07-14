@@ -16,11 +16,11 @@ public class LongforumDbContext(DbContextOptions<LongforumDbContext> options) : 
 
         modelBuilder.Entity<Video>().HasData(
             new Video {
-            Title = "The Spectacular Failure of the Star Wars Hotel",
-            Creator = new Creator { Id = 1, Name = "Jenny Nicholson" },
-            Link = "https://www.youtube.com/watch?v=T0CpOYZZZW4",
-            Thumbnail = "https://i.ytimg.com/vi/T0CpOYZZZW4/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCT33gkbK7okjm0feErdOSgo-c6QQ",
-            Duration = 14735
+                Title = "The Spectacular Failure of the Star Wars Hotel",
+                Creator = new Creator { Id = 1, Name = "Jenny Nicholson" },
+                Link = "https://www.youtube.com/watch?v=T0CpOYZZZW4",
+                Thumbnail = "https://i.ytimg.com/vi/T0CpOYZZZW4/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCT33gkbK7okjm0feErdOSgo-c6QQ",
+                Duration = 14735
             },
             new Video {
                 Title = "we need more political superheroes",
@@ -28,7 +28,21 @@ public class LongforumDbContext(DbContextOptions<LongforumDbContext> options) : 
                 Link = "https://www.youtube.com/watch?v=jXy8sP0Dsgs",
                 Thumbnail = "https://i.ytimg.com/vi/jXy8sP0Dsgs/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBkfdZkxZZi552iTWHHsMstZ6XyGw",
                 Duration = 1183
+            },
+            new Video {
+                Title = "Sleeping Beauty Deserves a Better Ending",
+                Creator = new Creator { Id = 3, Name = "Noralities" },
+                Link = "https://www.youtube.com/watch?v=xxy0ZtIFSlk",
+                Thumbnail = "https://i.ytimg.com/vi/xxy0ZtIFSlk/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLA6Lqcnh9UNQA4gOnN9CNxRGLRKmw",
+                Duration = 5173
+            },new Video {
+                Title = "WordGirl Could Beat Superman (and all of fiction) 37 minutes",
+                Creator = new Creator { Id = 4, Name = "Noah Boulter" },
+                Link = "https://www.youtube.com/watch?v=qXJuLaXPYnQ",
+                Thumbnail = "https://i.ytimg.com/vi/qXJuLaXPYnQ/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLC1SK7Zu97pWzmaDVGgkyOzhpIJkQ",
+                Duration = 2258
             });
+        
         
         modelBuilder.Entity<User>().HasData(
         new User {
