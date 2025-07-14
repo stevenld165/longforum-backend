@@ -1,0 +1,6 @@
+@longforum_backend_HostAddress = http://localhost:5145
+
+GET {{longforum_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
