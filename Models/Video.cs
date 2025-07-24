@@ -1,4 +1,5 @@
-﻿using longforum_backend.Enums;
+﻿using System.Collections.ObjectModel;
+using longforum_backend.Enums;
 
 namespace longforum_backend.Models;
 
@@ -13,6 +14,6 @@ public class Video
     public int Duration { get; set; }
     
     // Navigation Properties
-    public required Creator Creator { get; set; } 
-    public ICollection<Review>? Reviews { get; set; }
+    public Creator Creator { get; set; }
+    public ICollection<Review> Reviews { get; set; } = new List<Review>();
 }

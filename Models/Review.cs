@@ -11,7 +11,6 @@ public class Review
     public int VideoId { get; set; }
     
     // Navigation Properties
-    public required User User { get; set; }
-    public required Video Video { get; set; }
-    
+    public User User { get; set; }
+    public Video Video { get; set; }
 }

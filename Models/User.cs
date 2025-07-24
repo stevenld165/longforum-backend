@@ -8,12 +8,12 @@ public class User
     public string? ProfilePic { get; set; }
     public string? Bio { get; set; }
 
-    public ICollection<Creator> FavoriteCreators { get; set; } = [];
+    public ICollection<Creator> FavoriteCreators { get; set; }
     
     // Set up many-many relationship of users following
-    public ICollection<User> Following { get; set; } = [];
+    public ICollection<User> Following { get; set; }
     
     // Navigation Properties
-    public ICollection<Review> Reviews { get; set; } = [];
+    public ICollection<Review> Reviews { get; set; }
     
 }
