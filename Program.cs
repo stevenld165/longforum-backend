@@ -1,5 +1,7 @@
+using System.Text.Json.Serialization;
 using longforum_backend.Data;
 using longforum_backend.Models;
+using longforum_backend.Startup;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -7,11 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(opt => opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<LongforumDbContext>(opt => opt.UseInMemoryDatabase("Longforum").UseSeeding((context, _) =>
+builder.Services.AddDbContext<LongforumDbContext>(opt => opt.UseSqlite("Data Source=longforum.dat", o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)).UseSeeding((context, _) =>
 {
     context.Set<Creator>().AddRange(
         new Creator { Id = 1, Name = "Jenny Nicholson" },
@@ -46,7 +48,7 @@ builder.Services.AddDbContext<LongforumDbContext>(opt => opt.UseInMemoryDatabase
             Duration = 5173
         },new Video {
             Id = 4,
-            Title = "WordGirl Could Beat Superman (and all of fiction) 37 minutes",
+            Title = "WordGirl Could Beat Superman (and all of fiction)",
             CreatorId = 4,
             Link = "https://www.youtube.com/watch?v=qXJuLaXPYnQ",
             Thumbnail = "https://i.ytimg.com/vi/qXJuLaXPYnQ/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLC1SK7Zu97pWzmaDVGgkyOzhpIJkQ",
@@ -65,6 +67,7 @@ builder.Services.AddDbContext<LongforumDbContext>(opt => opt.UseInMemoryDatabase
             Id = 2,
             Username = "johnsmith",
             DisplayName = "John Smith",
+            ProfilePic = "https://i.pinimg.com/736x/50/75/c1/5075c1057eab4e9400eb46dccf4364b4.jpg",
             Bio = "Time is just a wibby wobbly timey wimey ball of... stuff? Yeah",
         });
     
@@ -99,11 +102,13 @@ builder.Services.AddDbContext<LongforumDbContext>(opt => opt.UseInMemoryDatabase
             IsLiked = false,
             ReviewText = "horrible repetitive mess of a video. actually completely loses the rails at the end like bestie...",
             UserId = 2,
-            VideoId = 3
+            VideoId = 4
         });
 
     context.SaveChanges();
 }));
+
+builder.Services.AddServices();
 
 var app = builder.Build();
 
@@ -116,14 +121,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors();
+
 app.UseAuthorization();
 
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
+/*using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<LongforumDbContext>();
     context.Database.EnsureCreated();
-}
+}*/
 
 app.Run();

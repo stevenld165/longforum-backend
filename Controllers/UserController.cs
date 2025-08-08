@@ -1,5 +1,7 @@
 using longforum_backend.Data;
+using longforum_backend.Enums;
 using longforum_backend.Models;
+using longforum_backend.Models.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,15 +12,24 @@ namespace longforum_backend.Controllers
     [ApiController]
     public class UserController(LongforumDbContext context) : ControllerBase
     {
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<User>> GetUserById(int id)
+        [HttpGet("{username}")]
+        public async Task<ActionResult<UserDto>> GetUserByUsername(string username)
         {
-            var user = await context.Users.FindAsync(id);
+            var user = await context.Users.Include(u => u.Lists).Include(user => user.Reviews).ThenInclude(r => r.Video).ThenInclude(v => v.Creator).FirstOrDefaultAsync(u => u.Username == username);
 
             if (user == null)
                 return NotFound();
 
-            return user;
+            var favoriteList = user.Lists.FirstOrDefault(l => l.Type == ListType.Favorite);
+            var recentReviews = user.Reviews.OrderByDescending(r => r.CreatedOn).Select(r => new ReviewDto(r)).Take(3).ToList();
+
+            var userDto = new UserDto(user)
+            {
+                Favorites = new ListDto(favoriteList ?? null),
+                RecentReviews = recentReviews
+            };
+            
+            return userDto;
         }
 
         [HttpGet]
@@ -33,7 +44,7 @@ namespace longforum_backend.Controllers
             context.Users.Add(user);
             await context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+            return CreatedAtAction(nameof(GetUserByUsername), new { id = user.Id }, user);
         }
     }
 }

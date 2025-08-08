@@ -3,9 +3,9 @@
 public class Creator
 {
     public int Id { get; set; }
-    public required string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     
     // Navigation Properties
-    public ICollection<Video> Videos { get; set; }
-    public ICollection<User> UsersFavoritedBy { get; set; }
+    public ICollection<Video> Videos { get; set; } = new List<Video>();
+    public ICollection<User> UsersFavoritedBy { get; set; } = new List<User>();
 }

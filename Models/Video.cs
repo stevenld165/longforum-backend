@@ -6,9 +6,9 @@ namespace longforum_backend.Models;
 public class Video
 {
     public int Id { get; set; }
-    public string? Title { get; set; }
-    public string? Link { get; set; }
-    public string? Thumbnail { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string Link { get; set; } = string.Empty;
+    public string Thumbnail { get; set; } = string.Empty;
     public int CreatorId { get; set; }
     public Platforms Platform { get; set; }
     public int Duration { get; set; }

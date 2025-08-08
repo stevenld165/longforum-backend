@@ -13,5 +13,7 @@ public class LongforumDbContext(DbContextOptions<LongforumDbContext> options) : 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
     }
 }
