@@ -15,7 +15,16 @@ namespace longforum_backend.Controllers
         [HttpGet("{username}")]
         public async Task<ActionResult<UserDto>> GetUserByUsername(string username)
         {
-            var user = await context.Users.Include(u => u.Lists).Include(user => user.Reviews).ThenInclude(r => r.Video).ThenInclude(v => v.Creator).FirstOrDefaultAsync(u => u.Username == username);
+            var user = await context.Users
+                .Include(u => u.Lists)
+                    .ThenInclude(l => l.Entries)
+                        .ThenInclude(e => e.Review)
+                .ThenInclude(r => r.Video)
+                .ThenInclude(v => v.Creator)
+                .Include(user => user.Reviews)
+                    .ThenInclude(r => r.Video)
+                        .ThenInclude(v => v.Creator)
+                .FirstOrDefaultAsync(u => u.Username == username);
 
             if (user == null)
                 return NotFound();

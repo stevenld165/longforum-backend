@@ -9,6 +9,8 @@ public class LongforumDbContext(DbContextOptions<LongforumDbContext> options) : 
     public DbSet<Creator> Creators { get; set; } = null!;
     public DbSet<Review> Reviews { get; set; } = null!;
     public DbSet<User> Users { get; set; } = null!;
+    public DbSet<List> Lists { get; set; } = null!;
+    public DbSet<ListEntry> ListEntries { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

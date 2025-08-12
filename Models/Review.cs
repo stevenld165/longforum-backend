@@ -1,4 +1,6 @@
-﻿namespace longforum_backend.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace longforum_backend.Models;
 
 public class Review
 {
@@ -15,5 +17,6 @@ public class Review
     public Video Video { get; set; } = null!;
     
     // Navigation Properties
-    public ICollection<List> Lists { get; set; } = new List<List>();
+    [JsonIgnore]
+    public ICollection<ListEntry> ListEntries { get; set; } = new List<ListEntry>();
 }

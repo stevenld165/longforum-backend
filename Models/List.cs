@@ -1,4 +1,5 @@
-﻿using longforum_backend.Enums;
+﻿using System.Text.Json.Serialization;
+using longforum_backend.Enums;
 
 namespace longforum_backend.Models;
 
@@ -13,5 +14,6 @@ public class List
     public int UserId { get; set; }
     public User User { get; set; } = null!;
 
-    public Review[] Reviews { get; set; } = [];
+    [JsonIgnore]
+    public ICollection<ListEntry> Entries { get; set; } = new List<ListEntry>();
 }

@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using longforum_backend.Data;
+using longforum_backend.Enums;
 using longforum_backend.Models;
 using longforum_backend.Startup;
 using Microsoft.EntityFrameworkCore;
@@ -104,7 +105,18 @@ builder.Services.AddDbContext<LongforumDbContext>(opt => opt.UseSqlite("Data Sou
             UserId = 2,
             VideoId = 4
         });
-
+    
+    context.Set<List>().AddRange(new List()
+    {
+        Id = 1,
+        Description = "johnsmith's favorites",
+        Name = "Favorites",
+        UserId = 2,
+        Type = ListType.Favorite,
+    });
+    
+    context.Set<ListEntry>().AddRange(new ListEntry(){Id = 1, Index = 0, ReviewId = 1, ListId = 1}, new ListEntry(){Id = 2, Index = 1, ReviewId = 3, ListId = 1});
+    
     context.SaveChanges();
 }));
 
