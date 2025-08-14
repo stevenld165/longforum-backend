@@ -6,6 +6,7 @@ public class ReviewDto
     public int Burgers { get; set; }
     public bool IsLiked { get; set; }
     public string ReviewText { get; set; }
+    public string CreatedOn { get; set; }
     public ICollection<string> Tags { get; set; }
     
     public int UserId { get; set; }
@@ -19,6 +20,7 @@ public class ReviewDto
         Burgers = r.Burgers;
         IsLiked = r.IsLiked;
         ReviewText = r.ReviewText;
+        CreatedOn = r.CreatedOn.ToShortDateString();
         Tags = r.Tags;
         UserId = r.UserId;
         VideoId = r.VideoId;

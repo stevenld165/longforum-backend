@@ -1,5 +1,6 @@
 using longforum_backend.Data;
 using longforum_backend.Models;
+using longforum_backend.Models.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,18 @@ namespace longforum_backend.Controllers
             var review = await context.Reviews.FindAsync(id);
 
             return review == null ? NotFound() : review;
+        }
+
+        [HttpGet("user/{username}")]
+        public async Task<ActionResult<ICollection<ReviewDto>>> GetReviewsByUsername(string username)
+        {
+            var reviews = await context.Reviews.Include(r => r.Video)
+                .ThenInclude(v => v.Creator)
+                .Where(r => r.User.Username == username)
+                .OrderByDescending(r => r.CreatedOn)
+                .Select(r => new ReviewDto(r)).ToListAsync();
+
+            return reviews;
         }
 
         [HttpGet]

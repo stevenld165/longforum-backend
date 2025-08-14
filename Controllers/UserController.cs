@@ -15,36 +15,19 @@ namespace longforum_backend.Controllers
         [HttpGet("{username}")]
         public async Task<ActionResult<UserDto>> GetUserByUsername(string username)
         {
-            var user = await context.Users
-                .Include(u => u.Lists)
-                    .ThenInclude(l => l.Entries)
-                        .ThenInclude(e => e.Review)
-                .ThenInclude(r => r.Video)
-                .ThenInclude(v => v.Creator)
-                .Include(user => user.Reviews)
-                    .ThenInclude(r => r.Video)
-                        .ThenInclude(v => v.Creator)
+            var user = await context.Users.Select(u => new UserDto(u))
                 .FirstOrDefaultAsync(u => u.Username == username);
 
             if (user == null)
                 return NotFound();
-
-            var favoriteList = user.Lists.FirstOrDefault(l => l.Type == ListType.Favorite);
-            var recentReviews = user.Reviews.OrderByDescending(r => r.CreatedOn).Select(r => new ReviewDto(r)).Take(3).ToList();
-
-            var userDto = new UserDto(user)
-            {
-                Favorites = new ListDto(favoriteList ?? null),
-                RecentReviews = recentReviews
-            };
             
-            return userDto;
+            return user;
         }
 
         [HttpGet]
-        public async Task<ActionResult<ICollection<User>>> GetUsers()
+        public async Task<ActionResult<ICollection<UserDto>>> GetUsers()
         {
-            return Ok(await context.Users.ToListAsync());
+            return Ok(await context.Users.Select(u => new UserDto(u)).ToListAsync());
         }
         
         [HttpPost]

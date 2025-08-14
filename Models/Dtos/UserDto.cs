@@ -7,10 +7,6 @@ public class UserDto
     public string DisplayName { get; set; } = string.Empty;
     public string ProfilePic { get; set; } = string.Empty;
     public string Bio { get; set; } = string.Empty;
-    
-    // Computed before sending to client
-    public ListDto Favorites { get; set; }
-    public ICollection<ReviewDto> RecentReviews { get; set; } = new List<ReviewDto>();
 
     public UserDto(User u)
     {
