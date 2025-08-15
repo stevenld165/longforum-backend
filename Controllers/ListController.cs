@@ -10,7 +10,7 @@ namespace longforum_backend.Controllers;
 [ApiController]
 public class ListController(LongforumDbContext context) : ControllerBase
 {
-    [HttpGet("favorites/{username}")]
+    [HttpGet("Favorites/{username}")]
     public async Task<ActionResult<ListDto>> GetFavoriteListByUsername(string username)
     {
         var favoriteList = await context.Lists.Include(l => l.Entries)

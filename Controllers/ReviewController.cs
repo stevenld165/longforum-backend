@@ -19,7 +19,7 @@ namespace longforum_backend.Controllers
             return review == null ? NotFound() : review;
         }
 
-        [HttpGet("user/{username}")]
+        [HttpGet("User/{username}")]
         public async Task<ActionResult<ICollection<ReviewDto>>> GetReviewsByUsername(string username)
         {
             var reviews = await context.Reviews.Include(r => r.Video)

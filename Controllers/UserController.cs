@@ -15,8 +15,8 @@ namespace longforum_backend.Controllers
         [HttpGet("{username}")]
         public async Task<ActionResult<UserDto>> GetUserByUsername(string username)
         {
-            var user = await context.Users.Select(u => new UserDto(u))
-                .FirstOrDefaultAsync(u => u.Username == username);
+            var user = await context.Users.Where(u => u.Username == username).Select(u => new UserDto(u))
+                .FirstOrDefaultAsync();
 
             if (user == null)
                 return NotFound();
